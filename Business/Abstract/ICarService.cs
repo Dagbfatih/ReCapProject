@@ -10,9 +10,9 @@ namespace Business.Abstract
     {
         List<Car> GetAll();
 
-        List<Car> GetById(int carId);
+        List<Car> GetCarsByBrandId(int brandId);
 
-        List<Car> GetByBrandId(int brandId);
+        List<Car> GetCarsByColorId(int colorId);
 
         void Add(Car car);
 
