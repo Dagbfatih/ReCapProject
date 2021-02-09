@@ -1,5 +1,7 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,51 +11,29 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCarDal : ICarDal
+    public class EfCarDal : EfEntityRepositoryBase<Car, SqlContext>, ICarDal
     {
-        public void Add(Car entity)
+        public List<CarDetailDto> GetCarDetails()
         {
             using (SqlContext context = new SqlContext())
             {
-                var AddedEntity = context.Entry(entity);
-                AddedEntity.State = EntityState.Added;
-                context.SaveChanges();
-            }
-        }
-
-        public void Delete(Car entity)
-        {
-            using (SqlContext context = new SqlContext())
-            {
-                var deletedEntity = context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
-            }
-        }
-
-        public Car Get(Func<Car, bool> filter)
-        {
-            using (SqlContext context = new SqlContext())
-            {
-                return context.Set<Car>().SingleOrDefault(filter);
-            }
-        }
-
-        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
-        {
-            using (SqlContext context = new SqlContext())
-            {
-                return filter == null ? context.Set<Car>().ToList() : context.Set<Car>().Where(filter).ToList();            
-            }
-        }
-
-        public void Update(Car entity)
-        {
-            using (SqlContext context = new SqlContext())
-            {
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
+                var productDetails = from c in context.Cars
+                                     join b in context.Brands
+                                     on c.BrandId equals b.BrandId
+                                     join co in context.Colors
+                                     on c.ColorId equals co.ColorId
+                                     orderby c.DailyPrice
+                                     select new CarDetailDto
+                                     {
+                                         CarId = c.CarId,
+                                         CarName = c.Description,
+                                         BrandId = b.BrandId,
+                                         BrandName = b.BrandName,
+                                         ColorId = co.ColorId,
+                                         ColorName = co.ColorName,
+                                         DailyPrice = c.DailyPrice
+                                     };
+                return productDetails.ToList();
             }
         }
     }
