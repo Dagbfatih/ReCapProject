@@ -19,5 +19,9 @@ namespace Business.Constants
         public static string ColorDetailsGot = "Araba detayları alındı";
         public static string ColorDeleted = "Ürün silindi";
         public static string ColorUpdated = "Ürün güncellendi";
+
+        public static string BrandAdded = "Ürün eklendi";
+        public static string BrandDeleted= "Ürün silindi";
+        public static string BrandUpdated = "Ürün güncellendi";
     }
 }
