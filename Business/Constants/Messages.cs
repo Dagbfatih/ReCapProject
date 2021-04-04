@@ -23,5 +23,9 @@ namespace Business.Constants
         public static string BrandAdded = "Ürün eklendi";
         public static string BrandDeleted= "Ürün silindi";
         public static string BrandUpdated = "Ürün güncellendi";
+        public static string CarImageAdded = "Resim eklendi";
+        public static string CarImageDeleted = "Resim silindi";
+        public static string CarImageUpdated = "Resim güncellendi";
+        public static string CarImagesLimited="Resim limiti 5'tir";
     }
 }

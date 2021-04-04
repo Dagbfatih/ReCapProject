@@ -8,6 +8,9 @@ using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 
 namespace ConsoleUI
 {
@@ -15,13 +18,22 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //CarManagerTest();
+            CarManagerTest();
             //ColorManagerTest();
             //UserManagerTest();
             //ResultsTest();
             //ErrorTest();
             //CustomerManagerTest();
             //RentalManagerTest();
+
+            //CarImageManager carImageService = new CarImageManager(new EfCarImageDal());
+            //var result = carImageService.Add(new CarImage { ImageId = 2, CarId = 3, ImagePath = "asdasd", Date = new DateTime(2020, 10, 16) });
+
+            //var s = Path.GetTempFileName();
+            //Console.WriteLine(s);
+            //Stream stream = new FileStream();
+
+
 
         }
 
@@ -42,7 +54,7 @@ namespace ConsoleUI
             {
                 foreach (var customer in result.Data)
                 {
-                    Console.WriteLine(customer.UserId + "---"+customer.CompanyName);
+                    Console.WriteLine(customer.UserId + "---" + customer.CompanyName);
                 }
             }
         }
@@ -117,28 +129,28 @@ namespace ConsoleUI
 
         private static void CarManagerTest()
         {
-            //CarManager carManager = new CarManager(new EfCarDal());
+            CarManager carManager = new CarManager(new EfCarDal());
 
-            ////carManager.Add(new Car { BrandId = 3, ColorId = 2, DailyPrice = 50000, ModelYear = "2015", Description = "a" });
+            //carManager.Add(new Car { BrandId = 3, ColorId = 2, DailyPrice = 50000, ModelYear = "2015", Description = "a" });
 
-            //Console.WriteLine("--- Getting All ---");
-            //foreach (var car in carManager.GetAll())
-            //{
-            //    Console.WriteLine("Price: {0} --- Description: {1} --- CarId: {2} --- BrandId: {3} --- ColorId: {4}",
-            //        car.DailyPrice, car.Description, car.CarId, car.BrandId, car.ColorId);
-            //}
-            //Console.WriteLine("-------------------------");
+            Console.WriteLine("--- Getting All ---");
+            foreach (var car in carManager.GetAll().Data)
+            {
+                Console.WriteLine("Price: {0} --- Description: {1} --- CarId: {2} --- BrandId: {3} --- ColorId: {4}",
+                    car.DailyPrice, car.Description, car.CarId, car.BrandId, car.ColorId);
+            }
+            Console.WriteLine("-------------------------");
 
-            //foreach (var car in carManager.GetCarsByBrandId(2))
-            //{
-            //    Console.WriteLine(car.Description);
-            //}
-            //Console.WriteLine("-------------------------");
+            foreach (var car in carManager.GetCarsByBrandId(2).Data)
+            {
+                Console.WriteLine(car.Description);
+            }
+            Console.WriteLine("-------------------------");
 
-            //foreach (var car in carManager.GetCarsByColorId(2))
-            //{
-            //    Console.WriteLine(car.Description);
-            //}
+            foreach (var car in carManager.GetCarsByColorId(2).Data)
+            {
+                Console.WriteLine(car.Description);
+            }
         }
     }
 }

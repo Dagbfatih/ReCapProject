@@ -17,7 +17,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (SqlContext context = new SqlContext())
             {
-                var productDetails = from c in context.Cars
+                var carDetails = from c in context.Cars
                                      join b in context.Brands
                                      on c.BrandId equals b.BrandId
                                      join co in context.Colors
@@ -33,7 +33,7 @@ namespace DataAccess.Concrete.EntityFramework
                                          ColorName = co.ColorName,
                                          DailyPrice = c.DailyPrice
                                      };
-                return productDetails.ToList();
+                return carDetails.ToList();
             }
         }
     }
