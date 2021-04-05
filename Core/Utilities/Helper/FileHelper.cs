@@ -49,10 +49,14 @@ namespace Core.Utilities.Helper
         {
             FileInfo ff = new FileInfo(file.FileName);
             string fileExtension = ff.Extension;
-            var newFileName = Guid.NewGuid().ToString("N") + fileExtension;
-            string path2 = @"\wwwroot\Images\";
-            string result = Environment.CurrentDirectory + path2 + newFileName;
-            return (result, $"\\Images\\{newFileName}");
+
+            var newPath = Guid.NewGuid() + fileExtension;
+
+            string path = Environment.CurrentDirectory + @"\wwwroot\Images";
+
+            string result = $@"{path}\{newPath}";
+
+            return (result, $"\\Images\\{newPath}");
         }
     }
 }

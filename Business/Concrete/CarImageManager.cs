@@ -29,7 +29,7 @@ namespace Business.Concrete
         public IResult Add(CarImage carImage, IFormFile formFile)
         {
             var result = BusinessRules.Run(ChechImageLimited(carImage.CarId));
-            if (!result.Success)
+            if (result != null)
             {
                 return result;
             }
@@ -52,14 +52,14 @@ namespace Business.Concrete
 
         public IResult Delete(CarImage carImage)
         {
-            var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(p => p.CarId == carImage.CarId).ImagePath;
-            var result = BusinessRules.Run(FileHelper.Delete(oldpath));
+            //var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(p => p.CarId == carImage.CarId).ImagePath;
+            //var result = BusinessRules.Run(FileHelper.Delete(oldpath));
 
-            if (result!=null)
-            {
-                return result;
-            }
-
+            //if (result != null)
+            //{
+            //    return result;
+            //}
+            FileHelper.Delete(carImage.ImagePath);
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.CarImageDeleted);
         }
@@ -91,6 +91,11 @@ namespace Business.Concrete
             carImage.Date = DateTime.Now;
             _carImageDal.Update(carImage);
             return new SuccessResult(Messages.CarImageUpdated);
+        }
+
+        public IDataResult<CarImage> Get(int id)
+        {
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(ci => ci.Id == id), Messages.CarImageGot);
         }
     }
 }
