@@ -39,7 +39,7 @@ namespace ConsoleUI
 
         private static void RentalManagerTest()
         {
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //RentalManager rentalManager = new RentalManager(new EfRentalDal());
             //rentalManager.Add(new Rental { CarId = 3, CustomerId = 1, RentDate = new DateTime(2019, 5, 10) });
             //rentalManager.Update(new Rental { CarId=3, new DateTime(2019, 6, 10) });
         }
@@ -55,20 +55,6 @@ namespace ConsoleUI
                 foreach (var customer in result.Data)
                 {
                     Console.WriteLine(customer.UserId + "---" + customer.CompanyName);
-                }
-            }
-        }
-
-        private static void UserManagerTest()
-        {
-            UserManager userManager = new UserManager(new EfUserDal());
-            //userManager.Add(new User { FirstName = "Bulent", LastName = "Dağ", Email = "dagbulent@hotmail.com", Password = "01234567891" });
-            var result = userManager.GetAll();
-            if (result.Success)
-            {
-                foreach (var user in result.Data)
-                {
-                    Console.WriteLine(user.FirstName + "---" + user.Email);
                 }
             }
         }
@@ -101,13 +87,13 @@ namespace ConsoleUI
                 Console.WriteLine(result.Message);
             }
 
-            var result2 = carManager.GetCarDetails(); // 'var' ile de 'IDataResult' ile de tanımlanabilr. Aynı şeydir
+            var result2 = carManager.GetCarsDetails(); // 'var' ile de 'IDataResult' ile de tanımlanabilr. Aynı şeydir
             if (result2.Success)
             {
                 foreach (var car in result2.Data)
                 {
                     Console.WriteLine("Car Description: {0} --- Car Brand: {1} --- Car Color: {2} --- Car Daily Price: {3}"
-                        , car.CarName, car.BrandName, car.ColorName, car.DailyPrice);
+                        , car.Description, car.BrandName, car.ColorName, car.DailyPrice);
                 }
             }
             else
@@ -137,7 +123,7 @@ namespace ConsoleUI
             foreach (var car in carManager.GetAll().Data)
             {
                 Console.WriteLine("Price: {0} --- Description: {1} --- CarId: {2} --- BrandId: {3} --- ColorId: {4}",
-                    car.DailyPrice, car.Description, car.CarId, car.BrandId, car.ColorId);
+                    car.DailyPrice, car.Description, car.Id, car.BrandId, car.ColorId);
             }
             Console.WriteLine("-------------------------");
 

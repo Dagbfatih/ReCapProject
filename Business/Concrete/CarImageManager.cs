@@ -52,14 +52,16 @@ namespace Business.Concrete
 
         public IResult Delete(CarImage carImage)
         {
-            //var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(p => p.CarId == carImage.CarId).ImagePath;
-            //var result = BusinessRules.Run(FileHelper.Delete(oldpath));
+            var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) +
+                _carImageDal.Get(ci => ci.Id == carImage.Id).ImagePath;
+            var result = BusinessRules.Run(FileHelper.Delete(oldpath));
 
-            //if (result != null)
-            //{
-            //    return result;
-            //}
-            FileHelper.Delete(carImage.ImagePath);
+            if (result != null)
+            {
+                return result;
+            }
+
+            //FileHelper.Delete(carImage.ImagePath);
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.CarImageDeleted);
         }
@@ -85,7 +87,7 @@ namespace Business.Concrete
         public IResult Update(CarImage carImage, IFormFile formFile)
         {
             var oldPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) +
-                _carImageDal.Get(cI => cI.CarId == carImage.CarId).ImagePath;
+                _carImageDal.Get(cI => cI.Id == carImage.Id).ImagePath;
 
             carImage.ImagePath = FileHelper.Update(oldPath, formFile);
             carImage.Date = DateTime.Now;
