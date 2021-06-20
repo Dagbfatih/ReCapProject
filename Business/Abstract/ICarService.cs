@@ -29,6 +29,8 @@ namespace Business.Abstract
 
         IResult Add(Car car);
 
+        IDataResult<int> AddWİthId(Car car);
+
         IResult Delete(Car car);
 
         IResult Update(Car car);
